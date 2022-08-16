@@ -14,11 +14,14 @@ public class ObjectSerializer {
         List<Field> fieldList = Arrays.asList(clazz.getDeclaredFields());
         json = fieldList.stream()
                 .map(field -> {
-                    Class fieldClass = field.getClass();
+                    String fieldName = field.getName();
+                    if (fieldName.indexOf("this") > -1) {
+                        return "";
+                    }
                     try {
                         return getFieldJson(object, field);
                     } catch (Exception e) {
-                        System.out.println("field " + field.getName() + " not found in object");
+                        System.out.println("field " + fieldName + " not found in object");
                         throw new RuntimeException("oi!");
                     }
                 })
@@ -38,7 +41,6 @@ public class ObjectSerializer {
     private String getFieldJson(Object object, Field field) throws IllegalAccessException {
         String fieldContentAsText = "";
         Object fieldContent = field.get(object);
-        //todo: ignore this$0:{}
         //if string or number
         if ((fieldContent instanceof String) || (fieldContent instanceof Number)) {
             fieldContentAsText = fieldContent.toString();
