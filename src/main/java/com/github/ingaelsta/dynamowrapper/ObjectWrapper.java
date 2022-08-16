@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ObjectWrapper <T> {
     //todo: add dynamodb annotations
-    private int hashID;
-    private int sortID;
+    private String hashID;
+    private String sortID;
     @Getter
     private T t;
     private int ttl;

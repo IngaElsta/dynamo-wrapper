@@ -8,26 +8,26 @@ import java.util.List;
 @NoArgsConstructor
 public class DynamoService {
 
-    public ObjectWrapper getObject (String hashId) {
+    public ObjectWrapper getObject (String hashId, String dbName) {
         //todo: implement this
         return new ObjectWrapper();
     }
 
-    public List<ObjectWrapper> getAllObjects () {
+    public List<ObjectWrapper> getAllObjects (String dbName) {
         //todo: implement this
         return new ArrayList<ObjectWrapper>();
     }
 
-    public String saveObject (Object object) {
+    public String saveObject (Object object, String dbName) {
         //todo: implement this
         return "hasId placeholder";
     }
 
-    public void deleteObject (String hashId) {
+    public void deleteObject (String hashId, String dbName) {
         //todo: implement this
     }
 
-    public ObjectWrapper getObject (String hashId, Object object) {
+    public ObjectWrapper updateObject (String hashId, Object object) {
         //todo: implement this
         return new ObjectWrapper();
     }
