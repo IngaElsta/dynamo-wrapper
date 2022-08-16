@@ -1,0 +1,10 @@
+#--shorthand=placeholder
+#https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CodeSamples.Java.html set up credentials locally
+amazon:
+  dynamodb:
+    endpoint: ${dynamoDBEndpoint}
+  aws:
+    accesskey: ${awsAccessKey}
+    secretkey: ${awsSecretKey}
+
+dynamoWrapper: ${dbName}
