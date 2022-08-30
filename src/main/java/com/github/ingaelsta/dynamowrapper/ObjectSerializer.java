@@ -41,8 +41,12 @@ public class ObjectSerializer {
     private String getFieldJson(Object object, Field field) throws IllegalAccessException {
         String fieldContentAsText = "";
         Object fieldContent = field.get(object);
+        //if string
+        if (fieldContent instanceof String) {
+            fieldContentAsText = "\"" + fieldContent + "\"";
+        }
         //if string or number
-        if ((fieldContent instanceof String) || (fieldContent instanceof Number)) {
+        else if (fieldContent instanceof Number) {
             fieldContentAsText = fieldContent.toString();
         }
         //todo: if a collection
@@ -52,7 +56,7 @@ public class ObjectSerializer {
             fieldContentAsText = serialize(fieldContent);
         }
         //todo: check if there other options
-        String fieldJson = field.getName() + ":" + fieldContentAsText + ",";
+        String fieldJson = "\"" + field.getName() + "\":" + fieldContentAsText + ",";
         return fieldJson;
     }
 }
