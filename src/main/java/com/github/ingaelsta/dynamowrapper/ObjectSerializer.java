@@ -41,12 +41,9 @@ public class ObjectSerializer {
     private String getFieldJson(Object object, Field field) throws IllegalAccessException {
         String fieldContentAsText = "";
         Object fieldContent = field.get(object);
-        //if string
         if (fieldContent instanceof String) {
             fieldContentAsText = "\"" + fieldContent + "\"";
-        }
-        //if string or number
-        else if (fieldContent instanceof Number) {
+        } else if (fieldContent instanceof Number) {
             fieldContentAsText = fieldContent.toString();
         }
         //todo: if a collection
