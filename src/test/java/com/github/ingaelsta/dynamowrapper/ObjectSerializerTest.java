@@ -1,8 +1,8 @@
 package com.github.ingaelsta.dynamowrapper;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class ObjectSerializerTest extends TestCase {
+public class ObjectSerializerTest {
     private class TestClass {
         String s;
         int i;
@@ -24,6 +24,7 @@ public class ObjectSerializerTest extends TestCase {
         }
     }
 
+    @Test
     public void testSerialize() {
         TestClass tc = new TestClass("outside", 5, new InnerTestClass(6.15, "inside"));
         System.out.println(new ObjectSerializer().serialize(tc));
