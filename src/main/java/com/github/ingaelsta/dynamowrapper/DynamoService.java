@@ -8,7 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DynamoService {
 
-    public ObjectWrapper getObject (String hashId, String dbName) {
+    public ObjectWrapper getObject (String dbName) {
         //todo: implement this
         return new ObjectWrapper();
     }
@@ -18,17 +18,12 @@ public class DynamoService {
         return new ArrayList<ObjectWrapper>();
     }
 
-    public String saveObject (Object object, String dbName) {
+    public String saveObject (String objectId, String object, String dbName) {
         //todo: implement this
         return "hasId placeholder";
     }
 
-    public void deleteObject (String hashId, String dbName) {
+    public void deleteObject (String objectId, String dbName) {
         //todo: implement this
-    }
-
-    public ObjectWrapper updateObject (String hashId, Object object) {
-        //todo: implement this
-        return new ObjectWrapper();
     }
 }
