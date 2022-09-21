@@ -17,6 +17,11 @@ public class ObjectSerializer {
             return object.toString();
         }
         //todo: if a collection
+        //list or can it be some other collection?
+        if (object instanceof Collection) {
+            Collection fieldContentAsCollection = (Collection) object;
+            return String.format("[%s]", processCollection((Collection<?>) object, fieldContentAsCollection));
+        }
         //todo: if a map
         //todo: check if there other options
         if (object == null) {
@@ -55,5 +60,17 @@ public class ObjectSerializer {
         return (json.charAt(json.length() - 1) == ',')
                 ?  json.substring(0, json.length() - 1) + "}"
                 : json + "}";
+    }
+
+    private String processCollection(Collection<?> fieldContent, Collection fieldContentAsCollection) {
+        if ((fieldContentAsCollection.size() == 0) || (fieldContentAsCollection == null)) {
+            return "";
+        }
+
+        String listAsText = fieldContent.stream()
+                .map(this::serialize)
+                .reduce("", (partialString, fieldJson) -> partialString + "," + fieldJson);
+
+        return listAsText.substring(1);
     }
 }
