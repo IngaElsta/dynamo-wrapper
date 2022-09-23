@@ -19,8 +19,7 @@ public class ObjectSerializer {
         //todo: if a collection
         //list or can it be some other collection?
         if (object instanceof Collection) {
-            Collection fieldContentAsCollection = (Collection) object;
-            return String.format("[%s]", processCollection((Collection<?>) object, fieldContentAsCollection));
+            return String.format("[%s]", processCollection((Collection<?>) object));
         }
         //todo: if a map
         //todo: check if there other options
@@ -28,49 +27,47 @@ public class ObjectSerializer {
             return "null";
         }
         //default for pojo
-        Class clazz = object.getClass();
-        List<Field> fieldList = Arrays.asList(clazz.getDeclaredFields());
-        return processPOJO(object, fieldList);
+        return processPOJO(object);
     }
 
-    private String processPOJO(Object object, List<Field> fieldList) {
+    private String processPOJO(Object object) {
+        Class clazz = object.getClass();
+        List<Field> fieldList = Arrays.asList(clazz.getDeclaredFields());
         String json = fieldList.stream()
                 .map(field -> {
-                    String fieldName = field.getName();
-                    //ignore references to containing objects
-                    if (fieldName.contains("this$")) {
-                        return "";
-                    }
-                    try {
-                        Object fieldContent = field.get(object);
-                        String fieldContentAsText = serialize(fieldContent);
-                        return String.format("\"%s\":%s,", field.getName(), fieldContentAsText);
-                    } catch (Exception e) {
-                        System.out.println("Field " + fieldName + " not found in object");
-                        throw new RuntimeException("Field " + fieldName + " not found in object");
-                    }
+                    return processPOJOField(object, field);
                 })
                 .reduce("{", (partialString, fieldJson) -> {
                     return partialString + fieldJson;
                 });
-        return fixJsonEnding(json);
-    }
-
-    private static String fixJsonEnding (String json) {
         return (json.charAt(json.length() - 1) == ',')
                 ?  json.substring(0, json.length() - 1) + "}"
                 : json + "}";
     }
 
-    private String processCollection(Collection<?> fieldContent, Collection fieldContentAsCollection) {
-        if ((fieldContentAsCollection.size() == 0) || (fieldContentAsCollection == null)) {
+    private String processPOJOField(Object object, Field field) {
+        String fieldName = field.getName();
+        //ignore references to containing objects
+        if (fieldName.contains("this$")) {
             return "";
         }
+        try {
+            Object fieldContent = field.get(object);
+            String fieldContentAsText = serialize(fieldContent);
+            return String.format("\"%s\":%s,", field.getName(), fieldContentAsText);
+        } catch (Exception e) {
+            System.out.println("Field " + fieldName + " not found in object");
+            throw new RuntimeException("Field " + fieldName + " not found in object");
+        }
+    }
 
+    private String processCollection(Collection<?> fieldContent) {
+        if ((fieldContent.size() == 0)) {
+            return "";
+        }
         String listAsText = fieldContent.stream()
                 .map(this::serialize)
                 .reduce("", (partialString, fieldJson) -> partialString + "," + fieldJson);
-
         return listAsText.substring(1);
     }
 }
