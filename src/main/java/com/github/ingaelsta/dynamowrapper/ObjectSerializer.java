@@ -6,9 +6,13 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 public class ObjectSerializer {
+    private class MapsCantBeProcessedException extends RuntimeException {
+
+    }
     public String serialize (Object object) {
         if (object instanceof String) {
             return String.format("\"%s\"", object);
@@ -19,9 +23,12 @@ public class ObjectSerializer {
         //todo: if a collection
         //list or can it be some other collection?
         if (object instanceof Collection) {
-            return String.format("[%s]", processCollection((Collection<?>) object));
+            return processCollection((Collection) object);
         }
-        //todo: if a map
+        //todo: implement actual processing if a map; for now throws exception
+        if (object instanceof Map) {
+            throw new MapsCantBeProcessedException();
+        }
         //todo: check if there other options
         if (object == null) {
             return "null";
@@ -61,13 +68,13 @@ public class ObjectSerializer {
         }
     }
 
-    private String processCollection(Collection<?> fieldContent) {
-        if ((fieldContent.size() == 0)) {
-            return "";
+    private String processCollection(Collection<?> objectAsCollection) {
+        if ((objectAsCollection.size() == 0)) {
+            return "[]";
         }
-        String listAsText = fieldContent.stream()
+        String listAsText = objectAsCollection.stream()
                 .map(this::serialize)
                 .reduce("", (partialString, fieldJson) -> partialString + "," + fieldJson);
-        return listAsText.substring(1);
+        return String.format("[%s]", listAsText.substring(1));
     }
 }
