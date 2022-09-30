@@ -5,14 +5,18 @@ import lombok.NoArgsConstructor;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
 public class ObjectSerializer {
-    private class MapsCantBeProcessedException extends RuntimeException {
-
+    private class FeatureNotImplementedException extends RuntimeException {
+        FeatureNotImplementedException(String message) {
+            super(message);
+        }
     }
+
     public String serialize (Object object) {
         if (object instanceof String) {
             return String.format("\"%s\"", object);
@@ -27,7 +31,11 @@ public class ObjectSerializer {
         }
         //todo: implement actual processing if a map; for now throws exception
         if (object instanceof Map) {
-            throw new MapsCantBeProcessedException();
+            throw new FeatureNotImplementedException("Map processing currently not implemented");
+        }
+        //todo: implement actual processing if a date; for now throws exception
+        if (object instanceof Date) {
+            throw new FeatureNotImplementedException("Date processing currently not implemented");
         }
         //todo: check if there other options
         if (object == null) {
