@@ -2,20 +2,14 @@ package com.github.ingaelsta.dynamowrapper;
 
 public class ObjectDeserializer {
 
-    private static class WrongTypeException extends RuntimeException {
+    public static class WrongTypeException extends RuntimeException {
         WrongTypeException (String message) {
             super(message);
         }
     }
 
-    private static class WrongSyntaxException extends RuntimeException {
+    public static class WrongSyntaxException extends RuntimeException {
         WrongSyntaxException (String message) {
-            super(message);
-        }
-    }
-
-    private class FeatureNotImplementedException extends RuntimeException {
-        FeatureNotImplementedException(String message) {
             super(message);
         }
     }
