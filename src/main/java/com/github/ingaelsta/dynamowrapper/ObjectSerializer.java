@@ -11,11 +11,6 @@ import java.util.Map;
 
 @NoArgsConstructor
 public class ObjectSerializer {
-    private class FeatureNotImplementedException extends RuntimeException {
-        FeatureNotImplementedException(String message) {
-            super(message);
-        }
-    }
 
     public String serialize (Object object) {
         if (object instanceof String) {

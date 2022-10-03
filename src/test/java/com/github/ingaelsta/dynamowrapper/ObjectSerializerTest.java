@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ObjectSerializerTest {
     private ObjectSerializer objectSerializer = new ObjectSerializer();
@@ -40,6 +41,7 @@ public class ObjectSerializerTest {
         assertEquals("null", objectSerializer.serialize(null));
         assertEquals("false", objectSerializer.serialize(false));
         assertEquals("true", objectSerializer.serialize(true));
+        assertThrows(FeatureNotImplementedException.class, () -> objectSerializer.serialize(new HashMap<String, Integer>()));
     }
 
     @Test
