@@ -45,6 +45,7 @@ public class ObjectSerializer {
         List<Field> fieldList = Arrays.asList(clazz.getDeclaredFields());
         String json = fieldList.stream()
                 .map(field -> {
+                    field.setAccessible(true);
                     return processPOJOField(object, field);
                 })
                 .reduce("{", (partialString, fieldJson) -> {

@@ -1,5 +1,7 @@
 package com.github.ingaelsta.dynamowrapper;
 
+import com.github.ingaelsta.dynamowrapper.testclasses.InnerTestClass;
+import com.github.ingaelsta.dynamowrapper.testclasses.TestClass;
 import lombok.AllArgsConstructor;
 import org.junit.Test;
 
@@ -12,19 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ObjectSerializerTest {
     private ObjectSerializer objectSerializer = new ObjectSerializer();
-
-    @AllArgsConstructor
-    private class TestClass {
-        String s;
-        int i;
-        InnerTestClass innerTestClass;
-    }
-
-    @AllArgsConstructor
-    private class InnerTestClass {
-        double d;
-        String s1;
-    }
 
     @AllArgsConstructor
     private class TestClassList {
