@@ -2,12 +2,10 @@ package com.github.ingaelsta.dynamowrapper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 public class ObjectDeserializer {
 
@@ -35,7 +33,33 @@ public class ObjectDeserializer {
         if (Character.isDigit(json.charAt(0))) {
             return parseNumber(json, clazz);
         }
-        throw new FeatureNotImplementedException("%s maps to a class not implemented yet");
+        //possible list
+        if (json.charAt(0) == '[') {
+            return parseList(json, clazz);
+
+        }
+        throw new FeatureNotImplementedException(String.format("Deserializing %s has not been implemented", clazz.getName()));
+    }
+
+    private static <T> T parseList(String json, Class<T> clazz) {
+        if (!(List.class.isAssignableFrom(clazz))) {
+            throw new WrongTypeException (String.format("Expected %s but got List", clazz.getName()));
+        }
+        if (json.charAt(json.length() - 1) != ']') {
+            throw new  WrongSyntaxException(String.format("List %s not finished properly", json));
+        }
+        String listJson = json.substring(1, json.length() - 1);
+        //each element must be either number
+
+        //or string
+
+        //or list
+
+        //or something within {}
+
+        //or something else - either corrupt or unsupported.
+        //todo: implement all the others so something can be returned
+        throw new FeatureNotImplementedException(String.format("The contents of json are either corrupt or of unsupported type: \n%s", json));
     }
 
     private static <T> T parseNumber(String json, Class<T> clazz) {
