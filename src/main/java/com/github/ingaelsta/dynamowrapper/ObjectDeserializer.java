@@ -125,12 +125,15 @@ public class ObjectDeserializer {
     private static <T> void setFields(T t, Map<String, Object> fieldContents, List<Field> fieldList) {
         fieldList.stream()
                 .forEach(field -> {
-                    Object fieldContent = fieldContents.get(field.getName());
-                    field.setAccessible(true);try {
+                    if (fieldContents.containsKey(field.getName())) {
+                        Object fieldContent = fieldContents.get(field.getName());
+                        field.setAccessible(true);
+                        try {
                             field.set(t, fieldContent);
                         } catch (IllegalAccessException e) {
-                            throw new RuntimeException(e);
+                            throw new RuntimeException(e); //todo: something more specific?
                         }
+                    }
                 });
     }
 }
