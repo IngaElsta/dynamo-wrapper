@@ -1,5 +1,6 @@
-package com.github.ingaelsta.dynamowrapper;
+package com.github.ingaelsta.dynamowrapper.conversion;
 
+import com.github.ingaelsta.dynamowrapper.conversion.ObjectDeserializer;
 import org.junit.Test;
 
 
@@ -8,28 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ObjectDeserializerTest {
     private ObjectDeserializer deserializer = new ObjectDeserializer();
-
-    private class TestClass {
-        String s;
-        int i;
-        InnerTestClass innerTestClass;
-
-        public TestClass(String s, int i, InnerTestClass innerTestClass) {
-            this.s = s;
-            this.i = i;
-            this.innerTestClass = innerTestClass;
-        }
-    }
-
-    private class InnerTestClass {
-        double d;
-        String s1;
-
-        public InnerTestClass(double d, String s1) {
-            this.d = d;
-            this.s1 = s1;
-        }
-    }
 
     @Test
     public void testDeserializeSimpleValues () {

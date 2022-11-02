@@ -1,4 +1,4 @@
-package com.github.ingaelsta.dynamowrapper;
+package com.github.ingaelsta.dynamowrapper.conversion;
 
 import lombok.NoArgsConstructor;
 

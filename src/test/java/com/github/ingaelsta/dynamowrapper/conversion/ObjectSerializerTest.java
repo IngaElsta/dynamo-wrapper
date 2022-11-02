@@ -1,7 +1,8 @@
-package com.github.ingaelsta.dynamowrapper;
+package com.github.ingaelsta.dynamowrapper.conversion;
 
 import com.github.ingaelsta.dynamowrapper.testclasses.InnerTestClass;
 import com.github.ingaelsta.dynamowrapper.testclasses.TestClass;
+import com.github.ingaelsta.dynamowrapper.testclasses.TestClassList;
 import lombok.AllArgsConstructor;
 import org.junit.Test;
 
@@ -14,14 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ObjectSerializerTest {
     private ObjectSerializer objectSerializer = new ObjectSerializer();
-
-    @AllArgsConstructor
-    private class TestClassList {
-        String s;
-        int i;
-        List<String> stringList;
-
-    }
 
     @Test
     public void testSerializeSimpleObject() {
